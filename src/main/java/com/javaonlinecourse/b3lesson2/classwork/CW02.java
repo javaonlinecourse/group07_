@@ -17,7 +17,7 @@ public class CW02 {
         }
 
         //тернарный оператор
-        i = (i > 6) ? 10 : getInt();
+        i = (condition1) ? 5 : 6;
     }
 
     static boolean pick(){ return false;}

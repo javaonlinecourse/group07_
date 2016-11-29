@@ -1,4 +1,4 @@
-package com.javaonlinecourse.b3lessson1.homework;
+package com.javaonlinecourse.b3lesson1.homework;
 
 /**
  * @author emitrohin
