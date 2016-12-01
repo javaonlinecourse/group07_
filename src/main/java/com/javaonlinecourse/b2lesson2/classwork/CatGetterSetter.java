@@ -6,11 +6,10 @@ package com.javaonlinecourse.b2lesson2.classwork;
 public class CatGetterSetter {
 
     private int age;
-    private int size;
 
     CatGetterSetter(int age, int size) {
         this.age = age;
-        this.size = size;
+        int size1 = size;
     }
 
     //getter
