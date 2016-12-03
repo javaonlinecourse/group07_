@@ -1,6 +1,6 @@
 package com.javaonlinecourse.b3lesson5.atm;
 
-import com.javaonlinecourse.b3lesson4.classwork.Command;
+import com.javaonlinecourse.b3lesson5.atm.exception.InterrupedOperationException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,12 +22,15 @@ public class ConsoleHelper {
         System.out.println(msg);
     }
 
-    public static String readString()
-    {
+    public static String readString() throws InterrupedOperationException {
         String s = "";
 
         try {
             s = reader.readLine();
+            if (s.equalsIgnoreCase(Operation.QUIT.toString())){
+                writeMessage("Команда прервана по запросу пользователя.");
+                throw new InterrupedOperationException();
+            }
         } catch (IOException e) {
             writeMessage("Ошибка ввода.");
         }
@@ -35,7 +38,7 @@ public class ConsoleHelper {
         return s;
     }
 
-    public static String askCode()
+    public static String askCode() throws InterrupedOperationException
     {
         String code;
         writeMessage("Пожалуйста, введите валюту.");
@@ -48,7 +51,7 @@ public class ConsoleHelper {
         }
     }
 
-    public static int[] parseMoneyInput()
+    public static int[] parseMoneyInput() throws InterrupedOperationException
     {
         String[] array;
         int[] result = new int[2];
@@ -64,7 +67,7 @@ public class ConsoleHelper {
                 x = Integer.parseInt(array[0]);
                 y = Integer.parseInt(array[1]);
             } catch (NumberFormatException e){
-                writeMessage("Некорректно введены данные");
+                writeMessage("Некорректно введены данные. Повторите ввод.");
                 continue;
             }
 
@@ -81,4 +84,28 @@ public class ConsoleHelper {
         return result;
     }
 
+    public static Operation askOperation() throws InterrupedOperationException {
+        String line;
+        while (true){
+            line = readString();
+            try {
+                return Operation.getOperation(Integer.parseInt(line));
+            } catch (IllegalArgumentException e) {
+                writeMessage("Некорректно введены данные. Повторите ввод.");
+            }
+        }
+    }
+
+    public static boolean askYesNo() throws InterrupedOperationException {
+        String line;
+        while (true){
+            line = readString();
+            if(line.equalsIgnoreCase("да"))
+                return true;
+            else if (line.equalsIgnoreCase("нет"))
+                return false;
+            else
+                writeMessage("Некорректно введены данные. Повторите ввод.");
+        }
+    }
 }
