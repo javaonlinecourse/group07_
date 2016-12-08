@@ -38,10 +38,10 @@ class WithdrawCommand implements Command {
             if(currency.isAmountAvailable(sum)){
                 try {
                     currency.withdraw(sum);
+                    writeMessage("Успешная выдача средств.");
                 } catch (NotEnoughMoneyException e) {
                     writeMessage("Нет таких денег в банкомате. Повторите ввод");
                 }
-                writeMessage("Успешная выдача средств.");
                 break;
             }else {
                 writeMessage("Нет таких денег в банкомате. Повторите ввод");

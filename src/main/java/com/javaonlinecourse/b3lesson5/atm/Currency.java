@@ -2,8 +2,9 @@ package com.javaonlinecourse.b3lesson5.atm;
 
 import com.javaonlinecourse.b3lesson5.atm.exception.NotEnoughMoneyException;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+import static com.javaonlinecourse.b3lesson5.atm.ConsoleHelper.writeMessage;
 
 /**
  * @author emitrohin
@@ -63,19 +64,53 @@ public class Currency {
         this.money = money;
     }
 
-    public void withdraw(int sum) throws NotEnoughMoneyException{
+    public void withdraw(int expectedAmount) throws NotEnoughMoneyException{
 
-        //TODO: Реализовать алгоритм
-        //Выдача должна возвращать минимальное количество банкнот, которыми можно выдать запрашиваемое количество
-        //  Жадный алгоритм
-        //выдачу пономинально вывести в консоль
-        //пример:
-        // вывести 1000
-        // 500 - 1
-        // 100 - 5
+        Map<Integer, Integer> temp = new HashMap<>();
+        temp.putAll(money);
 
-        //Нельзя выдать одни и теже банкноты повторно, проследить, чтобы выданные банкноты удалились из memory
+        ArrayList<Integer> list = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> pair: temp.entrySet())
+            list.add(pair.getKey());
 
-        //Если нет возможности выдать текущими купюрами требуемое количество банкнот, то кинуть NotEnoughMoneyException
+        Collections.sort(list);
+        Collections.reverse(list);
+
+        Map<Integer, Integer> result = new TreeMap<>();
+
+        for (Integer nominal : list)
+        {
+            int value = temp.get(nominal);
+            while (true){
+                if (expectedAmount < nominal || value <=0)
+                {
+                    temp.put(nominal, value);
+                    break;
+                }
+
+                expectedAmount -=nominal;
+                value--;
+
+                if (result.containsKey(nominal))
+                    result.put(nominal, result.get(nominal ) + 1);
+                else
+                    result.put(nominal, 1);
+            }
+        }
+
+        if (expectedAmount > 0)
+            throw new NotEnoughMoneyException();
+        else {
+            for (Map.Entry<Integer, Integer> pair: result.entrySet())
+            {
+                writeMessage("\t" + pair.getKey() + " - " + pair.getValue());
+
+                if (money.containsKey(pair.getKey())) {
+                    money.put(pair.getKey(), money.get(pair.getKey()) - pair.getValue());
+                }
+            }
+
+            writeMessage("Транзакция прошла успешно");
+        }
     }
 }
