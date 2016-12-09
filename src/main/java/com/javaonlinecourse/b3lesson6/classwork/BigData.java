@@ -1,4 +1,4 @@
-package com.javaonlinecourse.b3lesson6;
+package com.javaonlinecourse.b3lesson6.classwork;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
