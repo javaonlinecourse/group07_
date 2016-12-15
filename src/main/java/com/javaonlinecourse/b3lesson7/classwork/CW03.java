@@ -1,6 +1,5 @@
 package com.javaonlinecourse.b3lesson7.classwork;
 
-import com.javaonlinecourse.b3lesson6.Flyable;
 
 /**
  * @author emitrohin
@@ -9,30 +8,11 @@ import com.javaonlinecourse.b3lesson6.Flyable;
  */
 public class CW03 {
 
-    class myClass extends NonGeneric implements Flyable{
+    class myClass extends NonGeneric{
         public myClass(Object object) {
             super(object);
         }
 
-        @Override
-        public void fly() {
-
-        }
-
-        @Override
-        public void land() {
-
-        }
-
-        @Override
-        public int increaseHeight(int height) {
-            return 0;
-        }
-
-        @Override
-        public int decreaseHeight(int height) {
-            return 0;
-        }
     }
 
     public static void main(String[] args) {
